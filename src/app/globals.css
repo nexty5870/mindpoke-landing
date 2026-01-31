@@ -1,0 +1,290 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Cyber-Serif Palette */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: 'Crimson Pro', Georgia, serif;
+  --font-terminal: 'JetBrains Mono', monospace;
+  --font-pixel: 'Press Start 2P', cursive;
+  
+  /* Cyber-Serif Palette */
+  --cyber-bg: #0a0a0f;
+  --cyber-surface: #111113;
+  --cyber-card: #1a1a1f;
+  --cyber-border: #2a2a30;
+  --cyber-border-hover: #3a3a40;
+  --cyber-cyan: #00d4aa;
+  --cyber-amber: #ffb000;
+  --cyber-text: #e6e6e6;
+  --cyber-text-muted: #888888;
+  --cyber-white: #ffffff;
+}
+
+:root {
+  --radius: 0;
+  --background: #0a0a0f;
+  --foreground: #e6e6e6;
+  --card: #1a1a1f;
+  --card-foreground: #e6e6e6;
+  --popover: #1a1a1f;
+  --popover-foreground: #e6e6e6;
+  --primary: #00d4aa;
+  --primary-foreground: #0a0a0f;
+  --secondary: #1a1a1f;
+  --secondary-foreground: #e6e6e6;
+  --muted: #1a1a1f;
+  --muted-foreground: #888888;
+  --accent: #ffb000;
+  --accent-foreground: #0a0a0f;
+  --destructive: #ff4444;
+  --border: #2a2a30;
+  --input: #1a1a1f;
+  --ring: #00d4aa;
+}
+
+/* Noise texture overlay */
+.noise-bg {
+  position: relative;
+}
+
+.noise-bg::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Scanline effect */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.1) 2px,
+    rgba(0, 0, 0, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ASCII Box Components */
+.ascii-box {
+  position: relative;
+}
+
+.ascii-box::before {
+  content: "┌" attr(data-label) "─";
+  position: absolute;
+  top: -10px;
+  left: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--cyber-border);
+  background: var(--cyber-bg);
+  padding: 0 4px;
+}
+
+/* ASCII Button Style */
+.ascii-btn {
+  position: relative;
+  font-family: 'JetBrains Mono', monospace;
+  background: transparent;
+  border: 1px solid var(--cyber-border);
+  transition: none;
+}
+
+.ascii-btn::before {
+  content: "┌";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  color: var(--cyber-cyan);
+}
+
+.ascii-btn::after {
+  content: "┐";
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  color: var(--cyber-cyan);
+}
+
+.ascii-btn:hover {
+  background: var(--cyber-cyan);
+  color: var(--cyber-bg);
+  border-color: var(--cyber-cyan);
+}
+
+.ascii-btn:hover::before,
+.ascii-btn:hover::after {
+  color: var(--cyber-bg);
+}
+
+/* Terminal cursor blink */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.cursor-blink::after {
+  content: "█";
+  animation: cursor-blink 1s infinite;
+  color: var(--cyber-cyan);
+}
+
+/* Step transition (no smooth) */
+.step-transition {
+  transition-timing-function: steps(1);
+}
+
+/* Braille loader */
+@keyframes braille-load {
+  0% { content: "⠋"; }
+  12.5% { content: "⠙"; }
+  25% { content: "⠹"; }
+  37.5% { content: "⠸"; }
+  50% { content: "⠼"; }
+  62.5% { content: "⠴"; }
+  75% { content: "⠦"; }
+  87.5% { content: "⠧"; }
+  100% { content: "⠇"; }
+}
+
+.braille-loader::before {
+  content: "⠋";
+  animation: braille-load 0.8s infinite;
+  font-family: monospace;
+}
+
+/* Command prefix */
+.cmd-prefix::before {
+  content: "$ ";
+  color: var(--cyber-cyan);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Heat bars cyber style */
+.heat-bar {
+  background: linear-gradient(to top, var(--cyber-amber), var(--cyber-cyan));
+}
+
+/* Grid background */
+.grid-bg {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Typography classes */
+.font-serif {
+  font-family: 'Crimson Pro', Georgia, serif;
+}
+
+.font-terminal {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.font-pixel {
+  font-family: 'Press Start 2P', cursive;
+}
+
+/* Status indicators */
+.status-active::before {
+  content: "●";
+  color: var(--cyber-cyan);
+  margin-right: 6px;
+}
+
+.status-inactive::before {
+  content: "○";
+  color: var(--cyber-text-muted);
+  margin-right: 6px;
+}
+
+@layer base {
+  * {
+    border-color: #2a2a30;
+  }
+  
+  /* Remove rounded corners except for React Flow internals */
+  *:not(.react-flow *):not([class*="react-flow"]) {
+    border-radius: 0 !important;
+  }
+  
+  html {
+    background-color: #0a0a0f;
+  }
+  
+  body {
+    background-color: transparent;
+    color: #e6e6e6;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Crimson Pro', Georgia, serif;
+    color: #ffffff;
+  }
+
+  /* Remove all rounded corners except React Flow */
+  button:not(.react-flow button), 
+  input, select, textarea, 
+  [class*="rounded"]:not(.react-flow *) {
+    border-radius: 0 !important;
+  }
+
+  /* Sharp focus rings */
+  :focus-visible {
+    outline: 1px solid var(--cyber-cyan);
+    outline-offset: 2px;
+  }
+
+  /* Selection color */
+  ::selection {
+    background: var(--cyber-cyan);
+    color: var(--cyber-bg);
+  }
+
+  /* Custom scrollbar - cyber-serif style */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #1a1a1f;
+    border: 1px solid #2a2a30;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #3a3a40;
+    border: 1px solid #2a2a30;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--cyber-cyan);
+  }
+
+  ::-webkit-scrollbar-corner {
+    background: #1a1a1f;
+  }
+
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #3a3a40 #1a1a1f;
+  }
+}
